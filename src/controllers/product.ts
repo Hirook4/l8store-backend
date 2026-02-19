@@ -21,7 +21,6 @@ export const getProducts: RequestHandler = async (req, res) => {
   }
 
   const { metadata, orderBy, limit } = parseResult.data;
-
   const parsedLimit = limit ? parseInt(limit) : undefined;
   const parsedMetadata = metadata ? JSON.parse(metadata) : undefined;
 
@@ -37,7 +36,7 @@ export const getProducts: RequestHandler = async (req, res) => {
     liked: false,
   }));
 
-  res.json({ error: null, products: productsWithAbsoluteUrl });
+  res.json({ error: "products", products: productsWithAbsoluteUrl });
 };
 
 /* Busca um único produto */
@@ -65,12 +64,13 @@ export const getOneProduct: RequestHandler = async (req, res) => {
   await incrementProductView(product.id);
 
   res.json({
-    error: null,
+    error: "product by id",
     product: productWithAbsoluteImages,
     category,
   });
 };
 
+/* Busca produtos relacionados a um produto específico */
 export const getRelatedProducts: RequestHandler = async (req, res) => {
   const paramsResult = getRelatedProductsSchema.safeParse(req.params);
   const queryResult = getRelatedProductsQuerySchema.safeParse(req.query);
@@ -93,5 +93,5 @@ export const getRelatedProducts: RequestHandler = async (req, res) => {
     liked: false,
   }));
 
-  res.json({ error: null, products: productsWithAbsoluteUrl });
+  res.json({ error: "products related", products: productsWithAbsoluteUrl });
 };

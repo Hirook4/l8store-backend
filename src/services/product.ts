@@ -22,7 +22,7 @@ export const getAllProducts = async (filters: ProductFilters) => {
       break;
   }
 
-  /* Organize Metadata */
+  /* Organiza Metadata */
   let where: any = {};
   if (filters.metadata && typeof filters.metadata === "object") {
     let metaFilters = [];
