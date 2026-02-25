@@ -29,7 +29,7 @@ model UserAddress {
   id         Int      @id @default(autoincrement())
   userId     Int
   country    String
-  zipcode    String
+  zipCode    String
   state      String
   city       String
   street     String
@@ -119,7 +119,7 @@ model Order {
   shippingCountry    String?
   shippingState      String?
   shippingCity       String?
-  shippingZipcode    String?
+  shippingZipCode    String?
   shippingStreet     String?
   shippingNumber     String?
   shippingComplement String?

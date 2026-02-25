@@ -288,17 +288,17 @@ npm start
 
 ### `GET /cart/shipping`
 
-- **Description:** Calculate shipping cost and days for a zipcode.
+- **Description:** Calculate shipping cost and days for a zipCode.
 - **Auth:** None
 - **Query:**
   | Name | Type | Required |
   | ------- | ------ | -------- |
-  | zipcode | string | Yes |
+  | zipCode | string | Yes |
 - **Response:**
   ```json
   {
     "error": null,
-    "zipcode": "12345-678",
+    "zipCode": "12345-678",
     "cost": 7,
     "days": 3
   }
@@ -381,7 +381,7 @@ npm start
     "addresses": [
       {
         "id": 1,
-        "zipcode": "12345-678",
+        "zipCode": "12345-678",
         "street": "Street Name",
         "number": "123",
         "city": "City",
@@ -400,7 +400,7 @@ npm start
 - **Body:**
   ```json
   {
-    "zipcode": "12345-678",
+    "zipCode": "12345-678",
     "street": "Street Name",
     "number": "123",
     "city": "City",
@@ -415,7 +415,7 @@ npm start
     "error": null,
     "address": {
       "id": 1,
-      "zipcode": "12345-678",
+      "zipCode": "12345-678",
       "street": "Street Name",
       "number": "123",
       "city": "City",
@@ -467,7 +467,7 @@ npm start
       "total": 199.99,
       "shippingCost": 7,
       "shippingDays": 3,
-      "shippingZipcode": "12345-678",
+      "shippingZipCode": "12345-678",
       "shippingStreet": "Street Name",
       "shippingNumber": "123",
       "shippingCity": "City",

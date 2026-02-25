@@ -1,5 +1,5 @@
 import z from "zod";
 
 export const calculateShippingSchema = z.object({
-  zipcode: z.string().min(4, "postal code is required"),
+  zipCode: z.string().min(4, "postal code is required"),
 });

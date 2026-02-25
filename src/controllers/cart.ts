@@ -36,6 +36,6 @@ export const calculateShipping: RequestHandler = (req, res) => {
     res.status(400).json({ error: "invalid shipping parameters" });
     return;
   }
-  const { zipcode } = parseResult.data;
-  res.json({ error: null, zipcode, cost: 10, days: 5 });
+  const { zipCode } = parseResult.data;
+  res.json({ error: null, zipCode, cost: 10, days: 5 });
 };
