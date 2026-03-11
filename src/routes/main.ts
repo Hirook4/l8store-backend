@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import * as bannerController from "../controllers/banner";
 import * as productController from "../controllers/product";
 import * as categoryController from "../controllers/category";
@@ -26,3 +26,4 @@ routes.post("/user/register", userController.register);
 routes.post("/user/login", userController.login);
 routes.post("/user/addresses", authMiddleware, userController.addAddress);
 routes.get("/user/addresses", authMiddleware, userController.getAddresses);
+routes.post("/cart/finish", authMiddleware, cartController.finish);

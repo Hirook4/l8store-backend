@@ -5,5 +5,5 @@ export type Address = {
   city: string;
   street: string;
   number: string;
-  complement?: string;
+  complement?: string | null;
 };

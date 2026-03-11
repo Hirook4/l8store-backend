@@ -53,10 +53,27 @@ export const createAddress = async (userId: number, address: Address) => {
   });
 };
 
-/* Busca endereços do usuário logado */
+/* Busca endereços do usuário pelo Id */
 export const getAddressesFromUserId = async (userId: number) => {
   return await prisma.userAddress.findMany({
     where: { userId },
+    select: {
+      id: true,
+      country: true,
+      state: true,
+      city: true,
+      zipCode: true,
+      street: true,
+      number: true,
+      complement: true,
+    },
+  });
+};
+
+/* Busca um único endereço pelo Id */
+export const getAddressById = async (userId: number, addressId: number) => {
+  return prisma.userAddress.findFirst({
+    where: { id: addressId, userId },
     select: {
       id: true,
       country: true,
