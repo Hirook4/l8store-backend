@@ -6,6 +6,7 @@ import { calculateShippingSchema } from "../schemas/calculate-shipping-schema";
 import { cartFinishSchema } from "../schemas/cart-finish-schema";
 import { getAddressById } from "../services/user";
 import { createOrder } from "../services/order";
+import { createPaymentLink } from "../services/payment";
 
 export const cartMount: RequestHandler = async (req, res) => {
   const parseResult = cartMountSchema.safeParse(req.body);
@@ -78,6 +79,19 @@ export const finish: RequestHandler = async (req, res) => {
   });
 
   /* Pagamento */
-  let url = "";
+  if (!orderId) {
+    res.status(400).json({ error: "failed to create order" });
+    return;
+  }
+  const url = await createPaymentLink({
+    cart,
+    shippingCost,
+    orderId,
+  });
+
+  if (!url) {
+    res.status(400).json({ error: "failed to create payment link" });
+    return;
+  }
   res.status(201).json({ error: null, url });
 };

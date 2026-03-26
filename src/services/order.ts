@@ -60,3 +60,80 @@ export const createOrder = async ({
 
   return order.id;
 };
+
+export const updateOrderStatus = async (
+  orderId: number,
+  status: "paid" | "cancelled",
+) => {
+  await prisma.order.update({
+    where: { id: orderId },
+    data: { status },
+  });
+};
+
+export const getUserOrders = async (userId: number) => {
+  return await prisma.order.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      status: true,
+      total: true,
+      createdAt: true,
+    },
+    orderBy: { createdAt: "desc" },
+  });
+};
+
+export const getOrderById = async (id: number, userId: number) => {
+  const order = await prisma.order.findFirst({
+    where: { id, userId },
+    select: {
+      id: true,
+      status: true,
+      total: true,
+      shippingCost: true,
+      shippingDays: true,
+      shippingCountry: true,
+      shippingZipCode: true,
+      shippingState: true,
+      shippingCity: true,
+      shippingStreet: true,
+      shippingNumber: true,
+      shippingComplement: true,
+      createdAt: true,
+      orderItems: {
+        select: {
+          id: true,
+          quantity: true,
+          price: true,
+          product: {
+            select: {
+              id: true,
+              label: true,
+              price: true,
+              images: {
+                take: 1,
+                orderBy: { id: "asc" },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+  if (!order) {
+    return null;
+  }
+  return {
+    ...order,
+    orderItems: order.orderItems.map((item) => ({
+      ...item,
+      product: {
+        ...item.product,
+        image: item.product.images[0]
+          ? `media/products/${item.product.images[0].url}`
+          : null,
+      },
+    })),
+  };
+};

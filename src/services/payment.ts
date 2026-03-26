@@ -1,7 +1,44 @@
-import { prisma } from "../libs/prisma";
+import { CartItem } from "../types/cart-item";
+import {
+  createStripeCheckoutSession,
+  getStripeCheckoutSession,
+} from "../libs/stripe";
 
-export const createPaymentLink = async (orderId: number) => {
-  const order = await prisma.order.findUnique({
-    where: { id: orderId },
-  });
+type createPaymentLinkParams = {
+  cart: CartItem[];
+  shippingCost: number;
+  orderId: number;
+};
+
+export const createPaymentLink = async ({
+  cart,
+  shippingCost,
+  orderId,
+}: createPaymentLinkParams) => {
+  try {
+    const session = await createStripeCheckoutSession({
+      cart,
+      shippingCost,
+      orderId,
+    });
+    if (!session) {
+      return null;
+    }
+    return session;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const getOrderIdFromSession = async (sessionId: string) => {
+  try {
+    const session = await getStripeCheckoutSession(sessionId);
+    const orderId = session.metadata?.orderId;
+    if (!orderId) {
+      return null;
+    }
+    return parseInt(orderId);
+  } catch {
+    return null;
+  }
 };

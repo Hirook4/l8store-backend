@@ -9,6 +9,7 @@ const server = express();
 server.use(cors());
 /* Torna a pasta public/ acessível via navegador  */
 server.use(express.static("public"));
+server.use("/webhook/stripe", express.raw({ type: "application/json" }));
 server.use(express.json());
 /* Registra todas as rotas para que elas passem a funcionar no servidor */
 server.use(routes);
